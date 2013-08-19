@@ -1,5 +1,5 @@
 //
-// $Id: tst-endian.cc,v 1.2 2013/08/19 23:31:16 urs Exp $
+// $Id: tst-endian.cc,v 1.3 2013/08/19 23:31:26 urs Exp $
 //
 
 #include "endian.hh"
@@ -26,4 +26,12 @@ int main()
 
 	x  = l1;
 	l2 = y;
+}
+
+int foo()
+{
+	int s = 0;
+	for (be<int> i = 0; i < 10; i++)
+		s += i;
+	return s;
 }

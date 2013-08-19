@@ -1,5 +1,5 @@
 //
-// $Id: endian.hh,v 1.2 2013/08/19 23:31:16 urs Exp $
+// $Id: endian.hh,v 1.3 2013/08/19 23:31:26 urs Exp $
 //
 
 #ifndef ENDIAN_HH
@@ -49,6 +49,15 @@ public:
 		return *this;
 	}
 	operator T() { return be_to_cpu(val); }
+	be operator++() {
+		val = cpu_to_be(be_to_cpu(val) + 1);
+		return *this;
+	}
+	be operator++(int) {
+		be ret = *this;
+		++*this;
+		return ret;
+	}
 };
 
 #endif
