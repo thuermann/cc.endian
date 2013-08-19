@@ -1,16 +1,16 @@
 #
-# $Id: Makefile,v 1.1 2009/09/17 19:11:25 urs Exp $
+# $Id: Makefile,v 1.2 2013/08/19 23:31:06 urs Exp $
 #
 
 RM       = rm -f
 CXXFLAGS = -O6
 
 .PHONY: all
-all: be.s
+all: tst-endian.s
 
-be.s: be.cc
-	$(CXX) $(CXXFLAGS) -S -o $@ be.cc
+tst-endian.s: tst-endian.cc endian.hh
+	$(CXX) $(CXXFLAGS) -S -o $@ tst-endian.cc
 
 .PHONY: clean
 clean:
-	$(RM) *.o be.s
+	$(RM) *.o tst-endian.s
