@@ -1,22 +1,29 @@
 //
-// $Id: tst-endian.cc,v 1.1 2013/08/19 23:31:06 urs Exp $
+// $Id: tst-endian.cc,v 1.2 2013/08/19 23:31:16 urs Exp $
 //
 
 #include "endian.hh"
 
-be_int be1, be2;
-be_int x = 42;
+be<short> n, m, k = 0x1234;
+be<int>   a, b, c = 0x42;
+be<long>  x, y, z = 0x0815;
 
-int foo(void)
+short     s1, s2;
+int       i1, i2;
+long      l1, l2;
+
+int main()
 {
-	x   = be2;
-	be1 = 666;
+	k = 42;
+	c = 666;
+	z = 4711;
 
-	return be2;
-}
+	n  = s1;
+	s2 = m;
 
-int bar(int n)
-{
-	be1 = n;
-	return be2;
+	a  = i1;
+	i2 = b;
+
+	x  = l1;
+	l2 = y;
 }
