@@ -1,5 +1,5 @@
 //
-// $Id: endian.hh,v 1.4 2013/08/20 09:02:42 urs Exp $
+// $Id: endian.hh,v 1.5 2013/08/20 09:02:52 urs Exp $
 //
 
 #ifndef ENDIAN_HH
@@ -47,6 +47,16 @@ template <typename T> T be_to_cpu(T n)
 	return endianness() == 0 ? bswap(n) : n;
 }
 
+template <typename T> T cpu_to_le(T n)
+{
+	return endianness() == 1 ? bswap(n) : n;
+}
+
+template <typename T> T le_to_cpu(T n)
+{
+	return endianness() == 1 ? bswap(n) : n;
+}
+
 template <typename T> class be {
 	T val;
 public:
@@ -66,6 +76,30 @@ public:
 	}
 	be operator++(int) {
 		be ret = *this;
+		++*this;
+		return ret;
+	}
+};
+
+template <typename T> class le {
+	T val;
+public:
+	le(T n = 0) : val(cpu_to_le(n)) {}
+	le &operator=(const le &b) {
+		val = b.val;
+		return *this;
+	}
+	le &operator=(const T &n) {
+		val = cpu_to_le(n);
+		return *this;
+	}
+	operator T() { return le_to_cpu(val); }
+	le operator++() {
+		val = cpu_to_le(le_to_cpu(val) + 1);
+		return *this;
+	}
+	le operator++(int) {
+		le ret = *this;
 		++*this;
 		return ret;
 	}
