@@ -1,5 +1,5 @@
 //
-// $Id: endian.hh,v 1.3 2013/08/19 23:31:26 urs Exp $
+// $Id: endian.hh,v 1.4 2013/08/20 09:02:42 urs Exp $
 //
 
 #ifndef ENDIAN_HH
@@ -7,6 +7,18 @@
 
 #include <limits.h>
 #include <byteswap.h>
+
+static int endianness(void)
+{
+	static const union { int w; char c[4]; } w = { 0x01020304 };
+
+	if (w.c[0] == 4 && w.c[1] == 3 && w.c[2] == 2 && w.c[3] == 1)
+		return 0;
+	else if (w.c[0] == 1 && w.c[1] == 2 && w.c[2] == 3 && w.c[3] == 4)
+		return 1;
+	else
+		return -1;
+}
 
 template <typename T> T bswap(T n)
 {
@@ -25,15 +37,14 @@ template <typename T> T bswap(T n)
 	}
 }
 
-// Assume the host is little-endian.
 template <typename T> T cpu_to_be(T n)
 {
-	return bswap(n);
+	return endianness() == 0 ? bswap(n) : n;
 }
 
 template <typename T> T be_to_cpu(T n)
 {
-	return bswap(n);
+	return endianness() == 0 ? bswap(n) : n;
 }
 
 template <typename T> class be {
