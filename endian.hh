@@ -1,5 +1,5 @@
 //
-// $Id: endian.hh,v 1.6 2017/11/30 10:12:11 urs Exp $
+// $Id: endian.hh,v 1.7 2017/11/30 10:19:04 urs Exp $
 //
 
 #ifndef ENDIAN_HH
@@ -70,13 +70,42 @@ public:
 		return *this;
 	}
 	operator T() { return be_to_cpu(val); }
+	be operator+=(const T &n) {
+		val = cpu_to_be(T(be_to_cpu(val) + n));
+		return *this;
+	}
+	be operator-=(const T &n) {
+		val = cpu_to_be(T(be_to_cpu(val) - n));
+		return *this;
+	}
+	be operator*=(const T &n) {
+		val = cpu_to_be(T(be_to_cpu(val) * n));
+		return *this;
+	}
+	be operator/=(const T &n) {
+		val = cpu_to_be(T(be_to_cpu(val) / n));
+		return *this;
+	}
+	be operator%=(const T &n) {
+		val = cpu_to_be(T(be_to_cpu(val) % n));
+		return *this;
+	}
 	be operator++() {
-		val = cpu_to_be(T(be_to_cpu(val) + 1));
+		*this += 1;
 		return *this;
 	}
 	be operator++(int) {
 		be ret = *this;
-		++*this;
+		*this += 1;
+		return ret;
+	}
+	be operator--() {
+		*this -= 1;
+		return *this;
+	}
+	be operator--(int) {
+		be ret = *this;
+		*this -= 1;
 		return ret;
 	}
 };
@@ -94,13 +123,42 @@ public:
 		return *this;
 	}
 	operator T() { return le_to_cpu(val); }
+	le operator+=(const T &n) {
+		val = cpu_to_le(T(le_to_cpu(val) + n));
+		return *this;
+	}
+	le operator-=(const T &n) {
+		val = cpu_to_le(T(le_to_cpu(val) - n));
+		return *this;
+	}
+	le operator*=(const T &n) {
+		val = cpu_to_le(T(le_to_cpu(val) * n));
+		return *this;
+	}
+	le operator/=(const T &n) {
+		val = cpu_to_le(T(le_to_cpu(val) / n));
+		return *this;
+	}
+	le operator%=(const T &n) {
+		val = cpu_to_le(T(le_to_cpu(val) % n));
+		return *this;
+	}
 	le operator++() {
-		val = cpu_to_le(T(le_to_cpu(val) + 1));
+		*this += 1;
 		return *this;
 	}
 	le operator++(int) {
 		le ret = *this;
-		++*this;
+		*this += 1;
+		return ret;
+	}
+	le operator--() {
+		*this -= 1;
+		return *this;
+	}
+	le operator--(int) {
+		le ret = *this;
+		*this -= 1;
 		return ret;
 	}
 };
