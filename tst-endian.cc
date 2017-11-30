@@ -1,5 +1,5 @@
 //
-// $Id: tst-endian.cc,v 1.3 2013/08/19 23:31:26 urs Exp $
+// $Id: tst-endian.cc,v 1.4 2017/11/30 10:19:54 urs Exp $
 //
 
 #include "endian.hh"
@@ -26,6 +26,33 @@ int main()
 
 	x  = l1;
 	l2 = y;
+}
+
+void bar (void)
+{
+	n *= 2;
+	m *= 3;
+	k /= 4;
+
+	a += b;
+	c -= a;
+
+	// The following is equivalent to b += 10.
+	b += 4;
+	b += 6;
+
+	// The following two stmts are a NOP and could be
+	// completely eliminated.
+	x++;
+	--x;
+
+	// The following is equivalent to y += 2.
+	y++;
+	++y;
+
+	// The following is equivalent to l1 = l2 = z.
+	l1 = z++;
+	l2 = --z;
 }
 
 int foo()
